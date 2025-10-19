@@ -1,14 +1,16 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_mysqldb import MySQL
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'       # your MySQL user
-app.config['MYSQL_PASSWORD'] = 'root123' # your MySQL password
-app.config['MYSQL_DB'] = 'cardsDB'
+app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB')
+
 
 mysql = MySQL(app)
 
@@ -57,4 +59,4 @@ def add_card():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
