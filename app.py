@@ -18,9 +18,9 @@ mysql = MySQL(app)
 
 
 
-@app.route("/")
-def index():
-    return render_template("static/index.html")
+# @app.route("/")
+# def index():
+#     return render_template("static/index.html")
 
 
 @app.route("/test-db")
