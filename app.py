@@ -25,14 +25,15 @@ def index():
 
 @app.route("/test-db")
 def test_db():
-    message = "MySQL is connected!"
-    try:
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT 1")
-        cur.close()
-    except Exception as e:
-        message = f"Error connecting to MySQL: {e}"
-    return message
+    return render_template("index.html")
+    # message = "MySQL is connected!"
+    # try:
+    #     cur = mysql.connection.cursor()
+    #     cur.execute("SELECT 1")
+    #     cur.close()
+    # except Exception as e:
+    #     message = f"Error connecting to MySQL: {e}"
+    # return message
 
 
 
