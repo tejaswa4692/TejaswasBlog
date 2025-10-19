@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <div class="header">
             <h1 style="text-align: center;margin: 6px;font-weight: 400;">Tejaswas Epix Webpage</h1>
         </div>
@@ -18,6 +18,6 @@
                 <p style="margin-top: 7px;margin-bottom: 7px;font-size: large;font-weight: 200;">hi so today this and that happened</p>
             </div>
         </div>
-        <script src="peoplemain.js"></script>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
     </body>
 </html>

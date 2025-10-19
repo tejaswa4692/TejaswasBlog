@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 import os
+
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +14,14 @@ app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB')
 
 
 mysql = MySQL(app)
+
+
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
 
 @app.route("/test-db")
 def test_db():
