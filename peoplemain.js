@@ -18,7 +18,7 @@ function addstuff(heading, paragraph, date){
 
 
 async function initload() {
-    const res = await fetch('http://localhost:5000/cards');
+    const res = await fetch('https://myblog.onrender.com');
     const data = await res.json();
     
     data.cards.forEach(c => {
