@@ -1,0 +1,60 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from flask_mysqldb import MySQL
+
+app = Flask(__name__)
+CORS(app)
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'       # your MySQL user
+app.config['MYSQL_PASSWORD'] = 'root123' # your MySQL password
+app.config['MYSQL_DB'] = 'cardsDB'
+
+mysql = MySQL(app)
+
+@app.route("/test-db")
+def test_db():
+    try:
+        cur = mysql.connection.cursor()  # make sure to CALL cursor()
+        cur.execute("SELECT 1")
+        cur.close()
+        return "MySQL is connected!"
+    except Exception as e:
+        return f"Error connecting to MySQL: {e}"
+
+@app.route("/cards", methods=["GET"])
+def get_cards():
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT id, heading, date, content FROM cards")
+        rows = cur.fetchall()
+        cur.close()
+        # Convert rows to list of dicts
+        cards = [{"id": r[0], "heading": r[1], "date": str(r[2]), "content": r[3]} for r in rows]
+        return {"status": "success", "cards": cards}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+    
+    
+@app.route("/cards", methods=["POST"])
+def add_card():
+    data = request.get_json()  # get JSON data from frontend
+    heading = data.get("heading")
+    date = data.get("date")
+    content = data.get("content")
+    
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "INSERT INTO cards (heading, date, content) VALUES (%s, %s, %s)",
+            (heading, date, content)
+        )
+        mysql.connection.commit()
+        cur.close()
+        return {"status": "success", "message": "Card added!"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
