@@ -8,7 +8,7 @@ function addstuff(heading, paragraph, date){
 
 
     cloned.querySelector("h2").textContent = heading;
-    cloned.querySelector("p").textContent = paragraph;
+    cloned.querySelector("p").innerHTML = paragraph;
     cloned.querySelector("h5").textContent = date;
 
     cloned.classList = "card"
